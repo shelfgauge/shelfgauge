@@ -4,5 +4,12 @@
   "main": "index.js",
   "repository": "https://github.com/shelfgauge/shelfgauge",
   "author": "fengb",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "ts-node": "^3.0.6",
+    "typescript": "^2.3.4"
+  }
 }
