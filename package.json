@@ -6,9 +6,11 @@
   "author": "fengb",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start-watch": "nodemon index.ts"
   },
   "devDependencies": {
+    "nodemon": "^1.11.0",
     "ts-node": "^3.0.6",
     "typescript": "^2.3.4"
   }
