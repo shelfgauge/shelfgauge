@@ -10,8 +10,13 @@
     "start-watch": "nodemon index.ts"
   },
   "devDependencies": {
+    "@types/dotenv": "^4.0.0",
+    "app-module-path": "^2.2.0",
     "nodemon": "^1.11.0",
     "ts-node": "^3.0.6",
     "typescript": "^2.3.4"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0"
   }
 }
