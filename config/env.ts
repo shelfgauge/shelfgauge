@@ -34,9 +34,12 @@ function bool (key: string, defawlt?: boolean): boolean {
 }
 
 export default {
-  nodeEnv:  str('NODE_ENV'),
-  port:     num('PORT', 23456),
-  apiUrl:   str('API_URL'),
+  nodeEnv:    str('NODE_ENV'),
+
+  port:       num('PORT', 23456),
+  apiUrl:     str('API_URL'),
+  httpProxy:  str('http_proxy', '') || str('HTTP_PROXY' || ''),
+  httpsProxy: str('https_proxy', '') || str('HTTPS_PROXY' || ''),
 }
 
 if (MISSING.length > 0) {
