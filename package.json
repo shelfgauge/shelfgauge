@@ -18,13 +18,13 @@
   "devDependencies": {
     "@types/dotenv": "^4.0.0",
     "@types/koa": "^2.0.39",
-    "app-module-path": "^2.2.0",
+    "@types/koa-router": "^7.0.22",
     "nodemon": "^1.11.0",
     "ts-node": "^3.0.6",
     "typescript": "^2.3.4"
   },
   "dependencies": {
-    "@types/koa-router": "^7.0.22",
+    "app-module-path": "^2.2.0",
     "dotenv": "^4.0.0",
     "http-proxy": "^1.16.2",
     "https-proxy-agent": "^1.0.0",
