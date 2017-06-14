@@ -7,6 +7,7 @@ import ENV from 'config/env'
 
 const PROXY = httpProxy.createProxyServer({
   target: ENV.apiUrl,
+  changeOrigin: true,
   agent: (() => {
     if (ENV.apiUrl.startsWith('https://') && ENV.httpsProxy) {
       return new HttpsProxyAgent(ENV.httpsProxy)
