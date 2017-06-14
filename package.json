@@ -5,9 +5,15 @@
   "repository": "https://github.com/shelfgauge/shelfgauge",
   "author": "fengb",
   "license": "MIT",
+  "engines": {
+    "node": "7.6.0"
+  },
   "scripts": {
+    "build": "tsc",
+    "clobber": "find . -name node_modules -prune -o -name '*.ts' -print0 | xargs -0 rm",
     "start": "node index.js",
-    "start-watch": "nodemon index.ts"
+    "start-watch": "nodemon index.ts",
+    "heroku-postbuild": "yarn build && yarn clobber && yarn install --production"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.0",
