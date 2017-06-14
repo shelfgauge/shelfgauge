@@ -1,2 +1,2 @@
-import './env'
-require('app-module-path').addPath(__dirname + '/..')
+import "./env";
+require("app-module-path").addPath(__dirname + "/..");
