@@ -19,10 +19,7 @@ const PROXY = httpProxy.createProxyServer({
   })()
 });
 
-export default async function(
-  ctx: Context,
-  next: () => Promise<any>
-): Promise<void> {
+export default async function(ctx: Context, next: () => Promise<any>) {
   return new Promise<void>((resolve, reject) => {
     PROXY.web(ctx.req, ctx.res, (err: any) => {
       console.log("ERROR", err);
