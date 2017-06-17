@@ -58,6 +58,10 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
+"@types/lodash@^4.14.66":
+  version "4.14.66"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.66.tgz#3dbb83477becf130611f8fac82a8fdb199805981"
+
 "@types/node@*":
   version "7.0.29"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.29.tgz#ccfcec5b7135c7caf6c4ffb8c7f33102340d99df"
@@ -974,6 +978,10 @@ lodash.keys@^3.0.0:
 lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
+
+lodash@^4.17.4:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 lowercase-keys@^1.0.0:
   version "1.0.0"

@@ -47,6 +47,7 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     var $login = $('#login')
+    axios.defaults.baseURL = '<%= API_URL %>'
     if (localStorage.getItem('authorization')) {
       setupAuth(localStorage.getItem('authorization'))
       axios.post('/auth')

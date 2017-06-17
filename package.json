@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@types/app-root-path": "^1.2.4",
+    "@types/lodash": "^4.14.66",
     "app-module-path": "^2.2.0",
     "app-root-path": "^2.0.1",
     "dotenv": "^4.0.0",
@@ -35,6 +36,7 @@
     "https-proxy-agent": "^1.0.0",
     "koa": "^2.2.0",
     "koa-router": "^7.2.0",
-    "koa-views": "^6.0.2"
+    "koa-views": "^6.0.2",
+    "lodash": "^4.17.4"
   }
 }
