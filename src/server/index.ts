@@ -15,5 +15,4 @@ export default new Koa()
     })
   )
   .use(router.routes())
-  .use(router.allowedMethods())
-  .use(proxy);
+  .use(router.allowedMethods());
