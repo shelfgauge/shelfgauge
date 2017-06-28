@@ -1,9 +1,9 @@
-interface Coord {
-  0: number;
-  1: number;
+export interface Coord {
+  x: number;
+  y: number;
 }
 
-interface Chart {
+export interface Chart {
   width: number;
   height: number;
   lines: {

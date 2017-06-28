@@ -1,14 +1,15 @@
+import * as _ from "lodash";
 import axios from "axios";
 
 import ENV from "config/env";
-import Chart from "src/view/chart";
+import Chart, { Coord } from "src/view/chart";
 
 const API = axios.create({ baseURL: ENV.apiUrl });
 
-interface RepoSuite {
+export interface RepoSuite {
   ref: string;
   name: string;
-  pullRequest: string;
+  pullRequest: string | null;
   ranAt: string;
   createdAt: string;
 
@@ -29,12 +30,18 @@ export async function getRepoSuites(source: string, name: string) {
 }
 
 export function toChart(suites: RepoSuite[]): Chart {
+  const lines: { [key: string]: Coord[] } = {};
+  for (const suite of suites) {
+    const x = Date.parse(suite.ranAt).valueOf();
+    for (const test of suite.tests) {
+      const line = (lines[test.name] = lines[test.name] || []);
+      line.push({ x, y: test.value });
+    }
+  }
+
   return {
     width: 100,
     height: 100,
-    lines: {
-      black: [[20, 100], [40, 60], [70, 80], [100, 20]],
-      red: [[10, 90], [40, 60], [80, 70], [20, 20]]
-    }
+    lines: lines
   };
 }
