@@ -4,6 +4,8 @@ import axios from "axios";
 import ENV from "config/env";
 import Chart, { Coord } from "src/view/chart";
 
+import { ensure } from "src/util/object";
+
 const API = axios.create({ baseURL: ENV.apiUrl });
 
 export interface RepoSuite {
@@ -29,19 +31,23 @@ export async function getRepoSuites(source: string, name: string) {
   return response.data.data as RepoSuite[];
 }
 
+const COLORS = ["black", "red", "blue", "yellow"];
+
 export function toChart(suites: RepoSuite[]): Chart {
-  const lines: { [key: string]: Coord[] } = {};
+  const linesByName: { [key: string]: Coord[] } = {};
   for (const suite of suites) {
     const x = Date.parse(suite.ranAt).valueOf();
     for (const test of suite.tests) {
-      const line = (lines[test.name] = lines[test.name] || []);
+      const line = ensure(linesByName, test.name, () => []);
       line.push({ x, y: test.value });
     }
   }
 
+  const lines = Object.values(linesByName);
+
   return {
-    width: 100,
-    height: 100,
-    lines: lines
+    width: _(lines).flatten().map("x").max() as number,
+    height: _(lines).flatten().map("y").max() as number,
+    lines: _.mapKeys(lines, (line, index) => COLORS[index])
   };
 }

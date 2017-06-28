@@ -2,6 +2,6 @@
   width="<%= width %>" height="<%= height %>">
   <% _.forEach(lines, (line, color) => { %>
     <polyline fill="none" stroke="<%= color %>"
-      points="<%= line.map(point => point.join(",")).join(" ") %>"/>
+      points="<%= line.map(p => `${p.x} ${p.y}`).join(",") %>"/>
   <% }) %>
 </svg>
