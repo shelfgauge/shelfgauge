@@ -31,6 +31,7 @@
     "@types/lodash": "^4.14.66",
     "app-module-path": "^2.2.0",
     "app-root-path": "^2.0.1",
+    "axios": "^0.16.2",
     "dotenv": "^4.0.0",
     "http-proxy": "^1.16.2",
     "https-proxy-agent": "^1.0.0",
