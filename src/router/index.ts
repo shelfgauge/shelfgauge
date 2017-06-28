@@ -28,5 +28,6 @@ export default new Router()
       }
     };
     await ctx.render("chart.svg", chart);
+    ctx.type = "svg";
   })
   .use("/repo", repo.routes(), repo.allowedMethods());
