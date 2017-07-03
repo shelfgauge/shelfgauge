@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import axios from "axios";
 
 import ENV from "config/env";
-import Chart, { Coord } from "src/view/chart";
+import { Chart, Coord } from "src/view/chart";
 
 import { ensure } from "src/util/object";
 

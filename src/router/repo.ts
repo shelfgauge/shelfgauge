@@ -4,6 +4,7 @@ import * as Router from "koa-router";
 
 import proxy from "src/server/proxy";
 import * as shelfgauge from "src/service/shelfgauge";
+import * as chart from "src/view/chart";
 
 export default new Router()
   .get("/:source/:name/suite", async (ctx: Context) => {
@@ -12,8 +13,7 @@ export default new Router()
       ctx.params.name
     );
 
-    const chart = shelfgauge.toChart(suites);
-    await ctx.render("chart.svg", chart);
     ctx.type = "svg";
+    ctx.body = chart.render(shelfgauge.toChart(suites));
   })
   .post("/:source/:name/suite", proxy);
