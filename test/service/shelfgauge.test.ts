@@ -3,31 +3,42 @@ import { expect, _ } from "test/support";
 import * as shelfgauge from "src/service/shelfgauge";
 
 describe("service/shelfgauge", () => {
+  function createSuite(
+    timeMs: number,
+    tests: { [name: string]: number }
+  ): shelfgauge.RepoSuite {
+    return {
+      ref: "",
+      name: "",
+      pullRequest: null,
+      ranAt: new Date(timeMs).toISOString(),
+      createdAt: new Date(timeMs).toISOString(),
+
+      env: {
+        source: "",
+        info: ""
+      },
+
+      tests: _.map(tests, (value, name) => ({ name, value }))
+    };
+  }
+  const suites: shelfgauge.RepoSuite[] = [
+    createSuite(1000, { foo: 1, bar: 9 }),
+    createSuite(2000, { foo: 2, bar: 8 }),
+    createSuite(3000, { foo: 3, bar: 7 })
+  ];
+
+  describe("toRawChartData", () => {
+    it("creates a list of stuff", function() {
+      const data = shelfgauge.toRawChartData(suites);
+      expect(data).to.deep.equal({
+        foo: [{ x: 1000, y: 1 }, { x: 2000, y: 2 }, { x: 3000, y: 3 }],
+        bar: [{ x: 1000, y: 9 }, { x: 2000, y: 8 }, { x: 3000, y: 7 }]
+      });
+    });
+  });
+
   describe("toChart", () => {
-    function createSuite(tests: {
-      [name: string]: number;
-    }): shelfgauge.RepoSuite {
-      return {
-        ref: "",
-        name: "",
-        pullRequest: null,
-        ranAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-
-        env: {
-          source: "",
-          info: ""
-        },
-
-        tests: _.map(tests, (value, name) => ({ name, value }))
-      };
-    }
-    const suites: shelfgauge.RepoSuite[] = [
-      createSuite({ foo: 1, bar: 9 }),
-      createSuite({ foo: 2, bar: 8 }),
-      createSuite({ foo: 3, bar: 7 })
-    ];
-
     it("has a line per test", () => {
       const chart = shelfgauge.toChart(suites);
       expect(Object.keys(chart.lines)).to.have.length(2);

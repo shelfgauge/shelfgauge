@@ -4,7 +4,7 @@ import axios from "axios";
 import ENV from "config/env";
 import { Chart, Coord } from "src/view/chart";
 
-import { ensure } from "src/util/object";
+import { createFromKeys } from "src/util/object";
 
 const API = axios.create({ baseURL: ENV.apiUrl });
 
@@ -33,16 +33,26 @@ export async function getRepoSuites(source: string, name: string) {
 
 const COLORS = ["black", "red", "blue", "yellow"];
 
-export function toChart(suites: RepoSuite[]): Chart {
-  const linesByName: { [key: string]: Coord[] } = {};
+type Dict<V> = { [key: string]: V };
+
+export function toRawChartData(suites: RepoSuite[]): Dict<Coord[]> {
+  const tests = _.flatMap(suites, s => s.tests);
+  const linesByName = createFromKeys(
+    tests.map(t => t.name),
+    () => [] as Coord[]
+  );
   for (const suite of suites) {
     const x = Date.parse(suite.ranAt).valueOf();
     for (const test of suite.tests) {
-      const line = ensure(linesByName, test.name, () => []);
-      line.push({ x, y: test.value });
+      linesByName[test.name].push({ x, y: test.value });
     }
   }
 
+  return linesByName;
+}
+
+export function toChart(suites: RepoSuite[]): Chart {
+  const linesByName = toRawChartData(suites);
   const lines = Object.values(linesByName);
 
   return {

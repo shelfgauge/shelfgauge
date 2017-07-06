@@ -1,11 +1,7 @@
-export function ensure<V>(
-  obj: { [key: string]: V },
-  key: string,
-  setter: () => V
-): V {
-  if (!obj[key]) {
-    obj[key] = setter();
+export function createFromKeys<R>(keys: string[], val: (key?: string) => R) {
+  const ret = {} as { [key: string]: R };
+  for (const key of keys) {
+    ret[key] = val(key);
   }
-
-  return obj[key];
+  return ret;
 }
