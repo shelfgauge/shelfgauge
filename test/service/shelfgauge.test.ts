@@ -28,13 +28,17 @@ describe("service/shelfgauge", () => {
     createSuite(3000, { foo: 3, bar: 7 })
   ];
 
-  describe("toRawChartData", () => {
+  describe("toChartCoords", () => {
     it("creates a list of stuff", function() {
-      const data = shelfgauge.toRawChartData(suites);
-      expect(data).to.deep.equal({
-        foo: [{ x: 1000, y: 1 }, { x: 2000, y: 2 }, { x: 3000, y: 3 }],
-        bar: [{ x: 1000, y: 9 }, { x: 2000, y: 8 }, { x: 3000, y: 7 }]
-      });
+      const data = shelfgauge.toChartCoords(suites);
+      expect(data).to.have.deep.members([
+        { name: "foo", x: 1000, y: 1 },
+        { name: "foo", x: 2000, y: 2 },
+        { name: "foo", x: 3000, y: 3 },
+        { name: "bar", x: 1000, y: 9 },
+        { name: "bar", x: 2000, y: 8 },
+        { name: "bar", x: 3000, y: 7 }
+      ]);
     });
   });
 

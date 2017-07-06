@@ -33,31 +33,30 @@ export async function getRepoSuites(source: string, name: string) {
 
 const COLORS = ["black", "red", "blue", "yellow"];
 
-type Dict<V> = { [key: string]: V };
+type ChartCoord = Coord & { name: string };
 
-export function toRawChartData(suites: RepoSuite[]): Dict<Coord[]> {
-  const tests = _.flatMap(suites, s => s.tests);
-  const linesByName = createFromKeys(
-    tests.map(t => t.name),
-    () => [] as Coord[]
-  );
+export function toChartCoords(suites: RepoSuite[]): ChartCoord[] {
+  const coords = [] as ChartCoord[];
   for (const suite of suites) {
-    const x = Date.parse(suite.ranAt).valueOf();
+    const date = Date.parse(suite.ranAt).valueOf();
     for (const test of suite.tests) {
-      linesByName[test.name].push({ x, y: test.value });
+      coords.push({
+        name: test.name,
+        x: date,
+        y: test.value
+      });
     }
   }
 
-  return linesByName;
+  return coords;
 }
 
 export function toChart(suites: RepoSuite[]): Chart {
-  const linesByName = toRawChartData(suites);
-  const lines = Object.values(linesByName);
+  const lines = toChartCoords(suites);
 
   return {
-    width: _(lines).flatten().map("x").max() as number,
-    height: _(lines).flatten().map("y").max() as number,
-    lines: _.mapKeys(lines, (line, index) => COLORS[index])
+    width: _(lines).map("x").max() as number,
+    height: _(lines).map("y").max() as number,
+    lines: _.groupBy(lines, "name")
   };
 }
