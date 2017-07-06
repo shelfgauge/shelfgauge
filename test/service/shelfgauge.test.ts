@@ -52,5 +52,21 @@ describe("service/shelfgauge", () => {
       const chart = shelfgauge.toChart(suites);
       expect(Object.values(chart.lines)[0]).to.have.length(3);
     });
+
+    it("has correct width / height", () => {
+      const chart = shelfgauge.toChart(suites, { width: 40, height: 50 });
+      expect(chart.width).to.equal(40);
+      expect(chart.height).to.equal(50);
+    });
+
+    it("has x / y clamped to width / height", () => {
+      const chart = shelfgauge.toChart(suites, { width: 40, height: 50 });
+      _.forEach(chart.lines, coords => {
+        for (const coord of coords) {
+          expect(coord.x).to.be.lte(chart.width);
+          expect(coord.y).to.be.lte(chart.height);
+        }
+      });
+    });
   });
 });

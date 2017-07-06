@@ -4,6 +4,7 @@ import axios from "axios";
 import ENV from "config/env";
 import { Chart, Coord } from "src/view/chart";
 
+import { normalize } from "src/util/math";
 import { createFromKeys } from "src/util/object";
 
 const API = axios.create({ baseURL: ENV.apiUrl });
@@ -51,12 +52,28 @@ export function toChartCoords(suites: RepoSuite[]): ChartCoord[] {
   return coords;
 }
 
-export function toChart(suites: RepoSuite[]): Chart {
+export function toChart(
+  suites: RepoSuite[],
+  { width = 100, height = 100 } = {}
+): Chart {
   const lines = toChartCoords(suites);
+  const xs = _.map(lines, l => l.x);
+  const ys = _.map(lines, l => l.y);
+  const xMin = _.min(xs);
+  const xMax = _.max(xs);
+  const yMin = _.min(ys);
+  const yMax = _.max(ys);
+  const normalized = lines.map(line => {
+    return {
+      ...line,
+      x: width * normalize(line.x, xMin!, xMax!),
+      y: height * normalize(line.y, yMin!, yMax!)
+    };
+  });
 
   return {
-    width: _(lines).map("x").max() as number,
-    height: _(lines).map("y").max() as number,
-    lines: _.groupBy(lines, "name")
+    width: width,
+    height: height,
+    lines: _.groupBy(normalized, "name")
   };
 }
